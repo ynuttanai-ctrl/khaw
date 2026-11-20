@@ -1,6 +1,6 @@
 # ขาวมณีเดินเล่น — Khao Manee Stroll
 
-เว็บแอป React + TypeScript + **Anime.js v4** แสดงแอนิเมชัน **แมวขาวมณี (Khao Manee)** แมวไทยโบราณขนขาวบริสุทธิ์ตาสองสี เดินเล่นอย่างนุ่มนวลกลางสวนไทย พร้อมบรรยากาศ Parallax 5 เลเยอร์ และรันบน **Docker (Nginx Alpine)**
+เว็บแอป React + TypeScript + **Anime.js v4** แสดงแอนิเมชัน **แมวขาวมณี (Khao Manee)** แมวไทยโบราณขนขาวบริสุทธิ์ตาสองสี เดินเล่นอย่างนุ่มนวลกลางสวนไทย พร้อมบรรยากาศ Parallax 5 เลเยอร์ และรันบน **Docker (Node 22 Alpine)** พร้อมต่อหลัง Reverse Proxy (Nginx บนเครื่องโฮสต์) ได้ทันที
 
 ## ฟีเจอร์เด่น
 - **Smooth Feline Walk Cycle ด้วย Anime.js v4**: ขาทั้ง 4 ข้อต่อ 2 ท่อนเดินแบบ 4-beat lateral sequence, หางพริ้วแบบคลื่น 3 ท่อน, หัวทรงตัวสมจริง, กระพริบตา, หูกระดิก, กระพรวนทองแกว่งตามจังหวะก้าว
@@ -25,7 +25,7 @@ docker compose down
 ### ใช้ Docker CLI โดยตรง
 ```bash
 docker build -t khao-manee-stroll .
-docker run -d -p 7154:80 --name khao-manee-stroll khao-manee-stroll
+docker run -d -p 7154:7154 --name khao-manee-stroll khao-manee-stroll
 ```
 
 ## รันโหมดพัฒนา (Local Dev)

@@ -5,5 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: khao-manee-stroll
     ports:
-      - "7154:80"
+      - "7154:7154"
+    environment:
+      - PORT=7154
     restart: unless-stopped
