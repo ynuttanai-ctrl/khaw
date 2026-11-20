@@ -1,0 +1,9 @@
+services:
+  khao-manee-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: khao-manee-stroll
+    ports:
+      - "7154:80"
+    restart: unless-stopped

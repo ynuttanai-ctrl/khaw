@@ -1,0 +1,439 @@
+:root {
+  --font-thai: 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-thai);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.app-shell {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+/* Top header */
+.top-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24px 32px 0;
+  pointer-events: none;
+}
+
+.brand-card {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.8s ease, border-color 0.8s ease, color 0.8s ease;
+}
+
+.theme-morning .brand-card {
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  color: #243447;
+  box-shadow: 0 10px 30px rgba(36, 52, 71, 0.08);
+}
+
+.theme-sunset .brand-card {
+  background: rgba(58, 28, 42, 0.36);
+  border: 1px solid rgba(255, 219, 178, 0.32);
+  color: #fff6ea;
+  box-shadow: 0 10px 30px rgba(45, 16, 28, 0.22);
+}
+
+.theme-moonlight .brand-card {
+  background: rgba(15, 23, 46, 0.52);
+  border: 1px solid rgba(168, 206, 255, 0.22);
+  color: #edf4ff;
+  box-shadow: 0 10px 32px rgba(4, 10, 28, 0.42);
+}
+
+.brand-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.brand-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.brand-subtitle-en {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.82;
+}
+
+.brand-caption {
+  font-size: 0.82rem;
+  opacity: 0.78;
+  font-weight: 300;
+}
+
+.hint-pill {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all 0.4s ease;
+}
+
+.theme-morning .hint-pill {
+  background: rgba(255, 255, 255, 0.54);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  color: #2f455c;
+}
+
+.theme-sunset .hint-pill {
+  background: rgba(58, 28, 42, 0.38);
+  border: 1px solid rgba(255, 219, 178, 0.32);
+  color: #ffefd9;
+}
+
+.theme-moonlight .hint-pill {
+  background: rgba(15, 23, 46, 0.54);
+  border: 1px solid rgba(168, 206, 255, 0.22);
+  color: #dce9ff;
+}
+
+.hint-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #38bdf8, #f59e0b);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.65);
+}
+
+/* Main stage */
+.stage-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.scene-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Cat container positioned cleanly over the garden path */
+.cat-stage-anchor {
+  position: absolute;
+  left: 50%;
+  bottom: 15.5%;
+  transform: translateX(-50%);
+  width: min(460px, 76vw);
+  aspect-ratio: 360 / 250;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.cat-interactive-hitbox {
+  position: absolute;
+  inset: 14% 16% 10% 18%;
+  border-radius: 40%;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.cat-flip-wrapper {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+}
+
+.cat-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.14));
+}
+
+/* Precision SVG pivot origins for smooth Anime.js CSS transforms */
+.cat-root {
+  transform-origin: 174px 218px;
+}
+
+.cat-shadow,
+.ear-near,
+.ear-far,
+.whiskers-left,
+.whiskers-right,
+.eyelid-left,
+.eyelid-right,
+.butterfly-wing-left,
+.butterfly-wing-right,
+.celestial-orb,
+.garden-butterfly,
+.floating-petal,
+.garden-firefly {
+  transform-origin: 0px 0px;
+}
+
+.sky-star {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.theme-moonlight .cat-svg {
+  filter: drop-shadow(0 0 18px rgba(196, 224, 255, 0.32))
+    drop-shadow(0 8px 16px rgba(2, 6, 23, 0.45));
+}
+
+.theme-sunset .cat-svg {
+  filter: drop-shadow(0 0 14px rgba(255, 206, 152, 0.25))
+    drop-shadow(0 8px 16px rgba(45, 16, 28, 0.28));
+}
+
+/* Meow speech bubble */
+.meow-bubble {
+  position: absolute;
+  top: 6%;
+  right: 11%;
+  padding: 7px 14px;
+  border-radius: 18px 18px 18px 4px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #2c3e50;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+  opacity: 0;
+  transform: scale(0.5) translateY(10px);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cat-facing-left .meow-bubble {
+  right: auto;
+  left: 11%;
+  border-radius: 18px 18px 4px 18px;
+}
+
+/* Interactive click particles */
+.burst-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.burst-particle {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  will-change: transform, opacity;
+}
+
+/* Bottom glass control dock */
+.control-dock-wrap {
+  position: relative;
+  z-index: 25;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 22px;
+  pointer-events: none;
+}
+
+.control-dock {
+  pointer-events: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: background 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+  max-width: 96vw;
+}
+
+.theme-morning .control-dock {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 14px 36px rgba(30, 41, 59, 0.12);
+  color: #1e293b;
+}
+
+.theme-sunset .control-dock {
+  background: rgba(46, 20, 34, 0.48);
+  border: 1px solid rgba(255, 214, 170, 0.28);
+  box-shadow: 0 14px 38px rgba(30, 10, 20, 0.34);
+  color: #fff4e6;
+}
+
+.theme-moonlight .control-dock {
+  background: rgba(12, 20, 42, 0.66);
+  border: 1px solid rgba(164, 204, 255, 0.22);
+  box-shadow: 0 14px 40px rgba(2, 6, 23, 0.56);
+  color: #e6f0ff;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.control-divider {
+  width: 1px;
+  height: 24px;
+  background: currentColor;
+  opacity: 0.16;
+}
+
+.ctrl-btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-thai);
+  font-size: 0.82rem;
+  font-weight: 400;
+  padding: 7px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.22s ease, transform 0.18s ease, border-color 0.22s ease,
+    box-shadow 0.22s ease;
+  white-space: nowrap;
+}
+
+.ctrl-btn:hover {
+  background: rgba(148, 163, 184, 0.18);
+  transform: translateY(-1px);
+}
+
+.ctrl-btn:active {
+  transform: scale(0.96);
+}
+
+.theme-morning .ctrl-btn.active {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  font-weight: 500;
+}
+
+.theme-sunset .ctrl-btn.active {
+  background: rgba(255, 232, 204, 0.22);
+  border-color: rgba(255, 208, 148, 0.55);
+  box-shadow: 0 4px 12px rgba(30, 10, 20, 0.22);
+  font-weight: 500;
+}
+
+.theme-moonlight .ctrl-btn.active {
+  background: rgba(147, 197, 253, 0.2);
+  border-color: rgba(147, 197, 253, 0.48);
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.34);
+  font-weight: 500;
+}
+
+.eye-swatch {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.eye-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.eye-dot.blue {
+  background: radial-gradient(circle at 35% 35%, #7dd3fc, #0284c7);
+}
+
+.eye-dot.amber {
+  background: radial-gradient(circle at 35% 35%, #fde047, #d97706);
+}
+
+.action-btn {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(245, 158, 11, 0.24));
+  border-color: rgba(255, 255, 255, 0.25);
+  font-weight: 500;
+}
+
+@media (max-width: 760px) {
+  .top-header {
+    padding: 16px 16px 0;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .hint-pill {
+    font-size: 0.75rem;
+    padding: 7px 12px;
+  }
+
+  .control-divider {
+    display: none;
+  }
+
+  .control-dock {
+    padding: 8px 10px;
+    gap: 6px 8px;
+    border-radius: 18px;
+  }
+
+  .ctrl-btn {
+    padding: 6px 9px;
+    font-size: 0.76rem;
+  }
+
+  .cat-stage-anchor {
+    bottom: 18%;
+    width: min(360px, 88vw);
+  }
+}
